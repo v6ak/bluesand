@@ -1,0 +1,5 @@
+- name: restart BlueSand
+  systemd:
+    name=bluesand.service
+    state=restarted
+

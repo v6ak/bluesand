@@ -1,0 +1,33 @@
+I needed to provide Bluetooth to a Docker container. However, I didn't like the ways I've found:
+
+a. Adding excessive privileges to the container.
+b. Passing whole system D-Bus to the container, essentially giving the container quite much power.
+
+As a result, I've decided to create a separate D-Bus instance just for Bluez.
+
+## Potential drawbacks
+
+### My knowledge of D-Bus is limited
+
+I've looked for the right way to do that, but I've found nothing. Due to my limited knowledge of
+D-Bus, I might be still exposing some excessive privileges to the Docker container.
+
+If you know I am doint something wrong, please create an issue. If you think I am doing it right
+and you can prove it, please create an issue, too.
+
+### Bluez itself is not sandboxed
+
+Bluez seems to need root privileges, and I cannot do much about that.
+
+### D-Bus daemon has too much of privileges
+
+Currently, we run a privileged D-Bus daemon, because we use dbus-run-session, which runs BlueZ with
+the same privileges. I've considered using a separate service running under a different user 
+(which could quite reduce the attack surface), but I am not sure how to correctly pass the
+`$DBUS_SYSTEM_BUS_ADDRESS`.
+
+### Using session D-Bus socket as the system one
+
+I've created a session D-Bus instance (because it seemed that it is more suitable for unprivileged
+daemon), but use it as a privileged one, because BlueZ needs it. This is quite ugly.
+
