@@ -5,7 +5,7 @@ ConditionPathIsDirectory=/sys/class/bluetooth
 [Service]
 Type=simple
 
-ExecStart=/usr/bin/dbus-run-session --config-file /opt/bluesand/dbus.conf /bin/bash -c 'env DBUS_SYSTEM_BUS_ADDRESS="$DBUS_SESSION_BUS_ADDRESS" /usr/libexec/bluetooth/bluetoothd'
+ExecStart=/usr/bin/dbus-daemon --config-file /opt/bluesand/dbus.conf
 NotifyAccess=main
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 LimitNPROC=1

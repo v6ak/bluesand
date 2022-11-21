@@ -1,5 +1,12 @@
 - name: restart BlueSand
   systemd:
+    daemon_reload=true
     name=bluesand.service
+    state=restarted
+
+- name: restart bluez
+  systemd:
+    daemon_reload=true
+    name=bluetooth.service
     state=restarted
 

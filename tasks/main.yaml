@@ -1,23 +1,30 @@
 - name: BlueSand » DBus config
   template: src=dbus.conf.j2 dest={{ path }}/dbus.conf
 
-- name: BlueSand » bluez service » disable
-  systemd:
-    name=bluetooth.service
-    enabled=no
-    state=stopped
-
-- name: BlueSand » service » dbus_socket directory
+- name: BlueSand » dbus service » dbus_socket directory
   file: dest={{ path }}/dbus_socket state=directory
 
-- name: BlueSand » service » add
+- name: BlueSand » dbus service » add
   template: src=bluesand.service.j2 dest=/etc/systemd/system/bluesand.service
   notify: restart BlueSand
 
-- name: BlueSand » service » enable
+- name: BlueSand » dbus service » enable
   systemd:
     name=bluesand.service
     daemon_reload=true
     enabled=true
     state=started
 
+- name: BlueSand » bluez service » override directory
+  file: dest=/etc/systemd/system/bluetooth.service.d state=directory
+
+- name: BlueSand » bluez service » override
+  template: src=bluesand-override.conf.j2 dest=/etc/systemd/system/bluetooth.service.d/bluesand-override.conf
+  notify: restart bluez
+
+- name: BlueSand » bluez service » enable
+  systemd:
+    name=bluetooth.service
+    daemon_reload=true
+    enabled=yes
+    state=started

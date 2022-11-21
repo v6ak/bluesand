@@ -1,0 +1,7 @@
+[Unit]
+Requires=bluesand.service
+After=bluesand.service
+
+[Service]
+Type=simple
+Environment=DBUS_SYSTEM_BUS_ADDRESS=unix:path={{ path }}/dbus-socket/system_bus_socket
