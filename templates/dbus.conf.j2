@@ -2,4 +2,13 @@
 <busconfig>
   <listen>unix:path={{ path }}/dbus-socket/system_bus_socket</listen>
   <include ignore_missing="no">/usr/share/dbus-1/session.conf</include>
+
+  <policy context="default">
+    <allow user="root" />
+  </policy>
+
+  <!-- lower privileges: not needed, since we already run with limited privileges
+  <user>bluesand-messagebus</user>
+  -->
+
 </busconfig>

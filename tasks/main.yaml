@@ -1,8 +1,14 @@
 - name: BlueSand » DBus config
   template: src=dbus.conf.j2 dest={{ path }}/dbus.conf
 
-- name: BlueSand » dbus service » dbus_socket directory
-  file: dest={{ path }}/dbus_socket state=directory
+- name: BlueSand » dbus service » user
+  user:
+    name=bluesand-messagebus
+    create_home=no
+    shell=/usr/bin/false
+
+- name: BlueSand » dbus service » dbus-socket directory
+  file: dest={{ path }}/dbus-socket state=directory owner=bluesand-messagebus
 
 - name: BlueSand » dbus service » add
   template: src=bluesand.service.j2 dest=/etc/systemd/system/bluesand.service
