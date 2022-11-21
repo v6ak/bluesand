@@ -1,4 +1,4 @@
-- name: BlueSand » DBus config
+- name: BlueSand » dbus service » config
   template: src=dbus.conf.j2 dest={{ path }}/dbus.conf
 
 - name: BlueSand » dbus service » user
