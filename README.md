@@ -10,21 +10,15 @@ As a result, I've decided to create a separate D-Bus instance just for Bluez.
 ### My knowledge of D-Bus is limited
 
 I've looked for the right way to do that, but I've found nothing. Due to my limited knowledge of
-D-Bus, I might be still exposing some excessive privileges to the Docker container.
+D-Bus, I might be still exposing some excessive privileges to the Docker container. However, the
+impact of this should be limited by running D-Bus under a separate user with limited privileges.
 
 If you know I am doint something wrong, please create an issue. If you think I am doing it right
-and you can prove it, please create an issue, too.
+and you can prove it, please create an issue, too, because I'd like to update the documentation.
 
 ### Bluez itself is not sandboxed
 
 Bluez seems to need root privileges, and I cannot do much about that.
-
-### D-Bus daemon has too much of privileges
-
-Currently, we run a privileged D-Bus daemon, because we use dbus-run-session, which runs BlueZ with
-the same privileges. I've considered using a separate service running under a different user 
-(which could quite reduce the attack surface), but I am not sure how to correctly pass the
-`$DBUS_SYSTEM_BUS_ADDRESS`.
 
 ### Using session D-Bus socket as the system one
 
